@@ -1,0 +1,221 @@
+/* الألوان والمتغيرات الخاصة بـ Dashboard */
+:root {
+    --bg-main: #0b0f19;
+    --bg-card: #151b28;
+    --accent: #10b981; /* لون أخضر زمردي للمنتجات */
+    --accent-hover: #34d399;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border: #1f2937;
+    --danger: #f43f5e;
+    --warning: #f59e0b;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 30px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+/* الأزرار الاحترافية */
+button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, var(--accent), #059669);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+/* تصميم الجدول */
+.table-container {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+}
+
+thead {
+    background-color: #1f2937;
+}
+
+th {
+    padding: 16px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: rgba(31, 41, 55, 0.5);
+}
+
+/* الأوسمة (Badges) */
+.badge {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* أزرار الأكشن داخل الجدول */
+.table-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn {
+    background-color: transparent;
+    color: var(--warning);
+    border: 1px solid var(--warning);
+    padding: 6px 12px;
+}
+
+.edit-btn:hover {
+    background-color: var(--warning);
+    color: black;
+}
+
+.delete-btn {
+    background-color: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    padding: 6px 12px;
+}
+
+.delete-btn:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* تصميم النوافذ المنبثقة (Modals) */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    width: 90%;
+    max-width: 550px;
+    margin: 5% auto;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content h3 {
+    margin-bottom: 24px;
+    color: var(--accent);
+    font-size: 1.5rem;
+}
+
+/* الحقول */
+input, textarea {
+    width: 100%;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.actions button:first-child {
+    background-color: var(--accent);
+    color: white;
+    padding: 10px 24px;
+}
+
+.actions button:last-child {
+    background-color: #374151;
+    color: var(--text-main);
+    padding: 10px 24px;
+}
+
+/* تحسين للجوال */
+@media (max-width: 768px) {
+    th:nth-child(4), td:nth-child(4),
+    th:nth-child(5), td:nth-child(5) {
+        display: none; /* إخفاء الوصف والكمية في الشاشات الصغيرة جداً */
+    }
+}

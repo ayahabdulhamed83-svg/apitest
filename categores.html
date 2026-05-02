@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="categores-style.css">
+    <title>إدارة التصنيفات</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>قائمة التصنيفات</h1>
+        <button onclick="openModal('addModal')">إضافة تصنيف جديد +</button>
+
+        <!-- حاوية الكروت -->
+        <div id="cardsContainer" class="cards-grid">
+            <!-- سيتم حقن الكروت هنا بواسطة JS -->
+        </div>
+    </div>
+
+    <!-- Popup: إضافة تصنيف -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h3>إضافة تصنيف جديد</h3>
+            <input type="text" id="addName" placeholder="اسم التصنيف">
+            <textarea id="addDescription" placeholder="الوصف"></textarea>
+            <div class="actions">
+                <button onclick="createCategory()">حفظ</button>
+                <button onclick="closeModal('addModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup: تعديل تصنيف -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>تعديل التصنيف</h3>
+            <input type="hidden" id="editId">
+            <input type="text" id="editName">
+            <textarea id="editDescription"></textarea>
+            <div class="actions">
+                <button onclick="updateCategory()">تحديث</button>
+                <button onclick="closeModal('editModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup: تأكيد الحذف -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>تأكيد الحذف</h3>
+            <p>هل أنت متأكد من رغبتك في حذف هذا التصنيف؟</p>
+            <input type="hidden" id="deleteId">
+            <div class="actions">
+                <button class="btn-danger" onclick="confirmDelete()">حذف نهائي</button>
+                <button onclick="closeModal('deleteModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="categores-script.js"></script>
+</body>
+</html>
