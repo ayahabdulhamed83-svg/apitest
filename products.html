@@ -41,7 +41,12 @@
             <input type="text" id="addName" placeholder="اسم المنتج">
             <input type="text" id="addPrice" placeholder="السعر">
             <input type="number" id="addQuantity" placeholder="الكمية">
-            <input type="text" id="addCategoryId" placeholder="ID التصنيف">
+            
+            <!-- تم التغيير إلى Select -->
+            <select id="addCategoryId">
+                <option value="">جاري تحميل التصنيفات...</option>
+            </select>
+
             <textarea id="addDescription" placeholder="الوصف"></textarea>
             <div class="actions">
                 <button onclick="createProduct()">حفظ المنتج</button>
@@ -58,7 +63,12 @@
             <input type="text" id="editName" placeholder="اسم المنتج">
             <input type="text" id="editPrice" placeholder="السعر">
             <input type="number" id="editQuantity" placeholder="الكمية">
-            <input type="text" id="editCategoryId" placeholder="ID التصنيف">
+            
+            <!-- تم التغيير إلى Select -->
+            <select id="editCategoryId">
+                <option value="">جاري تحميل التصنيفات...</option>
+            </select>
+
             <textarea id="editDescription" placeholder="الوصف"></textarea>
             <div class="actions">
                 <button onclick="updateProduct()">تحديث البيانات</button>
