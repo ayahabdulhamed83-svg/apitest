@@ -2,7 +2,7 @@
 :root {
     --bg-main: #0b0f19;
     --bg-card: #151b28;
-    --accent: #10b981; /* لون أخضر زمردي للمنتجات */
+    --accent: #10b981; /* لون أخضر زمردي */
     --accent-hover: #34d399;
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
@@ -23,6 +23,7 @@ body {
     color: var(--text-main);
     padding: 30px;
     line-height: 1.6;
+    direction: rtl; /* التأكد من الاتجاه العربي */
 }
 
 .container {
@@ -48,17 +49,21 @@ h1 {
 /* الأزرار الاحترافية */
 button {
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 8px;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-add {
     background: linear-gradient(135deg, var(--accent), #059669);
     color: white;
-    border: none;
     padding: 12px 24px;
-    box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+    box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.3);
 }
 
 .btn-add:hover {
@@ -98,10 +103,6 @@ td {
     border-bottom: 1px solid var(--border);
     color: var(--text-main);
     font-size: 0.95rem;
-}
-
-tr:last-child td {
-    border-bottom: none;
 }
 
 tr:hover {
@@ -161,61 +162,99 @@ tr:hover {
 .modal-content {
     background-color: var(--bg-card);
     width: 90%;
-    max-width: 550px;
+    max-width: 500px;
     margin: 5% auto;
-    padding: 32px;
+    padding: 40px;
     border-radius: 16px;
     border: 1px solid var(--border);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .modal-content h3 {
-    margin-bottom: 24px;
-    color: var(--accent);
+    margin-bottom: 25px;
+    color: var(--text-main);
     font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
 }
 
-/* الحقول */
-input, textarea {
+/* الحقول والقوائم المنسدلة */
+input, textarea, select {
     width: 100%;
     background-color: var(--bg-main);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 10px;
+    padding: 14px;
     color: white;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     outline: none;
-    transition: border-color 0.2s;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
 }
 
+/* تحسين شكل القائمة المنسدلة (Select) */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    padding-left: 45px;
+    cursor: pointer;
+}
+
+/* حاوية الأزرار داخل الـ Modal */
 .actions {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row-reverse; /* ترتيب الأزرار لليسار في RTL */
     gap: 12px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
+/* زر الحفظ (الرئيسي) */
 .actions button:first-child {
-    background-color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #059669);
     color: white;
-    padding: 10px 24px;
+    padding: 12px 28px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
+.actions button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35);
+}
+
+/* زر الإلغاء */
 .actions button:last-child {
     background-color: #374151;
-    color: var(--text-main);
-    padding: 10px 24px;
+    color: #d1d5db;
+    padding: 12px 28px;
+}
+
+.actions button:last-child:hover {
+    background-color: #4b5563;
+    color: white;
+}
+
+/* زر الحذف في نافذة التأكيد */
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger), #be123c) !important;
+    color: white !important;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(244, 63, 94, 0.3);
 }
 
 /* تحسين للجوال */
 @media (max-width: 768px) {
     th:nth-child(4), td:nth-child(4),
     th:nth-child(5), td:nth-child(5) {
-        display: none; /* إخفاء الوصف والكمية في الشاشات الصغيرة جداً */
+        display: none;
     }
 }

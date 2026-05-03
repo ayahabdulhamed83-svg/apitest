@@ -1,45 +1,68 @@
 const API_URL = "https://test-frontend-student.vercel.app/api/products";
+const CAT_URL = "https://test-frontend-student.vercel.app/api/categories";
 
-// جلب المنتجات عند تشغيل الصفحة
-document.addEventListener("DOMContentLoaded", fetchProducts);
+// عند تحميل الصفحة
+document.addEventListener("DOMContentLoaded", () => {
+    fetchProducts();
+    fetchCategories(); // جلب التصنيفات لملء القوائم المنسدلة
+});
 
-// 1. جلب المنتجات (GET)
+// وظيفة لجلب التصنيفات
+async function fetchCategories() {
+    try {
+        const response = await fetch(CAT_URL);
+        const result = await response.json();
+        
+        if (result.success) {
+            const categories = result.data; 
+            const addSelect = document.getElementById("addCategoryId");
+            const editSelect = document.getElementById("editCategoryId");
+
+            let options = '<option value="">اختر التصنيف...</option>';
+            categories.forEach(cat => {
+                options += `<option value="${cat.id}">${cat.name}</option>`;
+            });
+
+            addSelect.innerHTML = options;
+            editSelect.innerHTML = options;
+        }
+    } catch (error) {
+        console.error("خطأ في جلب التصنيفات:", error);
+    }
+}
+
+// 1. جلب المنتجات
 async function fetchProducts() {
     try {
         const response = await fetch(API_URL);
         const result = await response.json();
         if (result.success) {
-            renderTable(result.data.items); // لاحظ الدخول إلى data.items
+            const products = result.data.items;
+            const tableBody = document.getElementById("productsTableBody");
+            tableBody.innerHTML = "";
+            products.forEach(product => {
+                const row = `
+                    <tr>
+                        <td>${product.name}</td>
+                        <td><span class="badge">${product.category?.name || 'غير مصنف'}</span></td>
+                        <td>${product.price} $</td>
+                        <td>${product.quantity}</td>
+                        <td>${product.description}</td>
+                        <td class="table-actions">
+                            <button class="edit-btn" onclick="openEditModal('${product.id}')">تعديل</button>
+                            <button class="delete-btn" onclick="openDeleteModal('${product.id}')">حذف</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
         }
     } catch (error) {
         console.error("خطأ في جلب المنتجات:", error);
     }
 }
 
-// رسم الجدول
-function renderTable(products) {
-    const tableBody = document.getElementById("productsTableBody");
-    tableBody.innerHTML = "";
-
-    products.forEach(product => {
-        const row = `
-            <tr>
-                <td>${product.name}</td>
-                <td><span class="badge">${product.category?.name || 'غير مصنف'}</span></td>
-                <td>${product.price} $</td>
-                <td>${product.quantity}</td>
-                <td>${product.description}</td>
-                <td class="table-actions">
-                    <button class="edit-btn" onclick="openEditModal('${product.id}')">تعديل</button>
-                    <button class="delete-btn" onclick="openDeleteModal('${product.id}')">حذف</button>
-                </td>
-            </tr>
-        `;
-        tableBody.innerHTML += row;
-    });
-}
-
-// 2. إضافة منتج جديد (POST)
+// 2. إضافة منتج جديد
 async function createProduct() {
     const payload = {
         name: document.getElementById("addName").value,
@@ -48,6 +71,11 @@ async function createProduct() {
         description: document.getElementById("addDescription").value,
         categoryId: document.getElementById("addCategoryId").value
     };
+
+    if (!payload.categoryId) {
+        alert("يرجى اختيار تصنيف!");
+        return;
+    }
 
     try {
         const response = await fetch(API_URL, {
@@ -65,7 +93,7 @@ async function createProduct() {
     }
 }
 
-// 3. جلب بيانات منتج للتعديل (GET by ID)
+// 3. جلب بيانات منتج للتعديل
 async function openEditModal(id) {
     try {
         const response = await fetch(`${API_URL}/${id}`);
@@ -77,7 +105,7 @@ async function openEditModal(id) {
         document.getElementById("editPrice").value = product.price;
         document.getElementById("editQuantity").value = product.quantity;
         document.getElementById("editDescription").value = product.description;
-        document.getElementById("editCategoryId").value = product.categoryId;
+        document.getElementById("editCategoryId").value = product.categoryId; // تعيين القيمة المختارة
 
         openModal('editModal');
     } catch (error) {
@@ -85,7 +113,7 @@ async function openEditModal(id) {
     }
 }
 
-// 4. تحديث المنتج (PUT)
+// 4. تحديث المنتج
 async function updateProduct() {
     const id = document.getElementById("editId").value;
     const payload = {
@@ -111,7 +139,7 @@ async function updateProduct() {
     }
 }
 
-// 5. الحذف (DELETE)
+// 5. الحذف
 function openDeleteModal(id) {
     document.getElementById("deleteId").value = id;
     openModal('deleteModal');
