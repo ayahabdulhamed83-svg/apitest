@@ -11,10 +11,10 @@ async function fetchProducts() {
         if (result.success) {
             // renderTable(result.data.items); // لاحظ الدخول إلى data.items
             const products = result.data.items;
-                const tableBody = document.getElementById("productsTableBody");
-    tableBody.innerHTML = "";
-
-    products.forEach(product => {
+             const tableBody = document.getElementById("productsTableBody");
+              tableBody.innerHTML = "";
+            
+             products.forEach(product => {
         const row = `
             <tr>
                 <td>${product.name}</td>
@@ -30,7 +30,6 @@ async function fetchProducts() {
         `;
         tableBody.innerHTML += row;
     });
-}
         }
     } catch (error) {
         console.error("خطأ في جلب المنتجات:", error);
