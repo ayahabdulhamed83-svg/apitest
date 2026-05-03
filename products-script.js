@@ -9,16 +9,9 @@ async function fetchProducts() {
         const response = await fetch(API_URL);
         const result = await response.json();
         if (result.success) {
-            renderTable(result.data.items); // لاحظ الدخول إلى data.items
-        }
-    } catch (error) {
-        console.error("خطأ في جلب المنتجات:", error);
-    }
-}
-
-// رسم الجدول
-function renderTable(products) {
-    const tableBody = document.getElementById("productsTableBody");
+            // renderTable(result.data.items); // لاحظ الدخول إلى data.items
+            const products = result.data.items;
+                const tableBody = document.getElementById("productsTableBody");
     tableBody.innerHTML = "";
 
     products.forEach(product => {
@@ -38,6 +31,34 @@ function renderTable(products) {
         tableBody.innerHTML += row;
     });
 }
+        }
+    } catch (error) {
+        console.error("خطأ في جلب المنتجات:", error);
+    }
+}
+
+// // رسم الجدول
+// function renderTable(products) {
+//     const tableBody = document.getElementById("productsTableBody");
+//     tableBody.innerHTML = "";
+
+//     products.forEach(product => {
+//         const row = `
+//             <tr>
+//                 <td>${product.name}</td>
+//                 <td><span class="badge">${product.category?.name || 'غير مصنف'}</span></td>
+//                 <td>${product.price} $</td>
+//                 <td>${product.quantity}</td>
+//                 <td>${product.description}</td>
+//                 <td class="table-actions">
+//                     <button class="edit-btn" onclick="openEditModal('${product.id}')">تعديل</button>
+//                     <button class="delete-btn" onclick="openDeleteModal('${product.id}')">حذف</button>
+//                 </td>
+//             </tr>
+//         `;
+//         tableBody.innerHTML += row;
+//     });
+// }
 
 // 2. إضافة منتج جديد (POST)
 async function createProduct() {
